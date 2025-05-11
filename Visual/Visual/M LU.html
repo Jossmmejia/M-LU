@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Te pienso, mamá con luz propia</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f2027;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .message {
+            max-width: 600px;
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ffb6c1;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body onclick="PlayAudio()" ontouchstart="PlayAudio()">
+   <audio id="Musica" autoplay loop>
+    <source src="Musica/Cancion.mp3" type="audio/mpeg">
+    <source src="Musica/vc.mp3" type="audio/mpeg">
+    <source src="Musica/Cancion.ogg" type="audio/ogg">
+</audio>
+<script>
+    function PlayAudio() {
+        document.getElementById("Musica").play();
+        }
+</script>
+    <canvas id="bgCanvas"></canvas>
+
+    
+    <div class="container">
+        <div class="message">
+            <h1>Feliz Día, Mamá con Luz Propia</h1>
+            <p>
+                No sé si alguien te lo dice así, pero ser mamá y seguir brillando como tú<br>
+                es algo que no muchas logran.<br><br>
+
+                Eres hogar, pero también vuelo. Sabes cuidar con ternura, pero también mirar con fuego.<br>
+                Y mi favorita: sostienes el mundo de tu niño con una mano, y con la otra, el tuyo propio.<br>
+                Hoy, más que felicitarte por ser madre,<br>
+                quiero decirte que me gusta verte serlo sin dejar de ser tú.<br><br>
+
+                Si esta noche ves luces bailando en el cielo,<br>
+                no son estrellas: son todos los pensamientos lindos que te mando<br>
+                —con uno especial que se escapa y se parece a mí— ✨<br><br>
+
+                Gracias por ser quien eres… y por dejar que te piense así, bajito y bonito.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 1,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffb6c1';
+                ctx.fill();
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > width || p.y < 0 || p.y > height) {
+                    p.x = Math.random() * width;
+                    p.y = Math.random() * height;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        createParticles();
+        animate();
+    </script>
+
+</body>
+</html>
